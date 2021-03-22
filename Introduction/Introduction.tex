@@ -1,0 +1,28 @@
+\chapter{Introduction}
+\label{ch:introduction}
+
+\begin{displayquote}[Stephanie Butland]
+First lines did not define last pages in real life the way they did in books.
+\end{displayquote}
+
+Welcome to my dissertation template. It builds on the \href{http://tug.ctan.org/tex-archive/macros/latex/contrib/memoir/memman.pdf}{memoir class}, but it has evolved organically over many years. It was first created by Louise Bowler for her DPhil thesis \ci{bowler_modelling_2018} (who was inspired by various others at Oxford), who shared it with me. I have subsequently used it if for my thesis \ci{becker_measuring_2019}. This current templates conforms to \url{UCL's guidelines}{https://www.ucl.ac.uk/students/exams-and-assessments/research-assessments/format-bind-and-submit-your-thesis-general-guidance}. In the following sections I will highlight some of the features and customisation that I use. May it be useful to you!
+
+\section{References}
+\label{int:references}
+
+There is a whole variety of needs and ways to reference things. This template uses \texttt{biblatex-chicago} for author-year style citations, with various modifications and special commands to help me. For example, \texttt{\textbackslash ca} cites the author name (printing \ca{becker_measuring_2019}), and then the year can go at the end using \texttt{autocite} or \texttt{ci} \ci{becker_measuring_2019}. The \texttt{\textbackslash cite} command is less useful I find (printing \cite{becker_measuring_2019}, i.e. the same as the \texttt{autocite} command without the brackets), and the \texttt{\textbackslash cite*} command prints \cite*{becker_measuring_2019}. I wish there was a way to tell overleaf that the \texttt{ca, ci} commands bibliographic and trigger the auto-complete. \ingolf{To investigate, maybe there is a way?}
+
+\section{Figures and Tables}
+\label{int:figures}
+
+\begin{figure}[!htb]
+    \centering
+    \placeholder{0.2}
+    \caption[A placeholder caption]{That can have more caption text, which will not appear in the List of Tables}
+    \label{int:fig:exampleCaption}
+\end{figure}
+
+% I have loaded cleveref with the capitalize option, so there is no difference to cref and Cref. Your choice!
+\Cref{int:fig:exampleCaption} is an example Figure in \cref{int:figures}. An example table (\cref{app:tab:pinSharing}) can be found in \cref{app:additionaltables} on \cpageref{app:tab:pinSharing}.
+
+

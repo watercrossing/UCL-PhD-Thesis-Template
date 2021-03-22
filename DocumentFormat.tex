@@ -1,0 +1,344 @@
+% A file containing all the custom formatting and packages for this document
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage[autopunct=true]{csquotes}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{calc}                   % Used for chapter style
+\usepackage[final]{graphicx}
+\usepackage[toctitles]{titlesec}    % Put long titles in table of contents and short titles in headers
+\usepackage[svgnames,table]{xcolor}       % Use the svgnames list of colour names from the xcolor package
+\usepackage{geometry}
+\usepackage{eso-pic}
+
+
+%% Suppress some warning that aren't actually warnings.
+\usepackage[saveall]{silence}
+
+%\WarningFilter{biblatex}{'\DeclareSortingScheme' is deprecated}
+\WarningFilter{biblatex}{Since you are using the 'memoir' class}
+%\WarningFilter{biblatex}{Field 'extrayear' is deprecated}
+\WarningFilter{biblatex-chicago}{Empty Ibidem citation}
+%\WarningFilter{etex}{Extended allocation already in use}
+%\WarningFilter{latex}{destination with the same identifier}
+
+% This warning occurs when using pdf's as images.. sometimes.
+\pdfsuppresswarningpagegroup=1
+
+
+%%%%%%%%%%%%%%%
+%%% Colours %%%
+%%%%%%%%%%%%%%%
+
+% List of custom colours
+\ifthenelse{\boolean{onlinecopy}}{%
+\definecolor{Highlight}{RGB}{119, 3, 3}        % Chapter colour
+}{\definecolor{Highlight}{RGB}{0, 0, 0}}
+
+\colorlet{CIngolf}{Blue}
+\colorlet{CSimon}{Green}
+
+%%%%%%%%%%%%
+%% Setup %%%
+%%%%%%%%%%%%
+\usepackage{hyperref}
+\hypersetup{
+    pdftitle={\thesisTitle},          % title
+    pdfauthor={\thesisAuthor},  % author
+    pdfstartview=Fit,           % fit page to pdf reader window
+    pdfpagelayout=TwoPageRight,   % show one page, scroll moves to next page
+    linkcolor=Highlight,        % colour of internal links
+    citecolor=Highlight,        % colour of links to bibliography
+    urlcolor=Highlight,         % colour of external links
+    colorlinks=true,			% turn coloured links on
+    final=true					% use final version of links even in draft mode
+}
+
+
+
+%%%%%%%%%%%%%%
+%%% Styles %%%
+%%%%%%%%%%%%%%
+
+% Choose line spacing (otherwise \SingleSpacing or \DoubleSpacing)
+\OnehalfSpacing
+
+% List spacing (can also use \firmlists for slightly wider spacing)
+\tightlists
+\usepackage[inline]{enumitem}
+\setlist{noitemsep}
+
+% Sections (make font sizes smaller than usual)
+\setsecheadstyle{\large\bfseries\raggedright}
+\setsubsecheadstyle{\bfseries\raggedright}
+\setsubsubsecheadstyle{\bfseries\raggedright}
+\setparaheadstyle{\itshape\raggedright}
+
+% Caption style (small and bold)
+\captionnamefont{\bfseries\small}
+\captiontitlefont{\small}
+
+% Depth of section labels
+\setsecnumdepth{subsubsection}
+\settocdepth{subsection}
+
+% Create counter for list of notes, and fancy notes command
+\newcounter{notes}
+\renewcommand{\thenotes}{\arabic{notes}}
+\newcommand{\notes}[3]{%
+  \gdef\thereisanote{}%
+	\refstepcounter{notes}%
+	{\noindent\color{#2}\textbf{#1}: #3}%
+	\addcontentsline{lon}{notes}{\protect{\color{#2}\textbf{#1:}} #3}}%\par} %Comment \par back in if notes should have their own paragraph
+\newcommand{\listnotesname}{To Do List}
+\newlistof{listofnotes}{lon}{\listnotesname}
+\newlistentry{notes}{lon}{0}
+
+\AtEndDocument{\ifdefined\thereisanote\label{note:was:used:in:doc}\fi}
+
+% the \@ needs special treating, hence the 'makeat*'
+\makeatletter
+\newcommand{\conditionalLoN}{\@ifundefined{r@note:was:used:in:doc}{}{\listofnotes}}
+\makeatother
+%%%%%%%%%%%%
+%%% Page %%%
+%%%%%%%%%%%%
+
+% Make Layout UCL compliant
+
+\setlrmarginsandblock{40mm}{20mm}{*}        % {spine margin}{edge margin}{ratio spine:edge}
+\setulmarginsandblock{30mm}{*}{*}           % {upper margin}{lower margin}{ratio upper:lower}
+\setheadfoot{\onelineskip}{3\onelineskip}   % Set the space for the header and footer
+\setheaderspaces{*}{\onelineskip}{*}        % Set the spacing above/below the header
+\checkandfixthelayout
+
+% Add some extra space for long page numbers in toc
+\setpnumwidth{3em}
+
+% Modify the ruled style from memoir slightly and make the plain page numbers match
+\makeheadrule{ruled}{\textwidth}{\normalrulethickness}
+\makeevenhead{ruled}{\scshape\leftmark}{}{}
+\makeoddhead{ruled}{}{}{\scshape\rightmark}
+\makeevenfoot{plain}{\thepage}{}{}
+\makeoddfoot{plain}{}{}{\thepage}
+
+
+% Modify the marks for chapters and sections, and alter the marks for the headers of the bibliography etc. to make them small caps
+\makepsmarks{ruled}{\nouppercaseheads
+\createmark{chapter}{left}{shownumber}{}{:\,}
+\createmark{section}{right}{shownumber}{}{:\,}
+\createplainmark{toc}{both}{\contentsname}
+\createplainmark{lof}{both}{\listfigurename}
+\createplainmark{lot}{both}{\listtablename}
+\createplainmark{lon}{both}{\listnotesname}
+\createplainmark{bib}{both}{\bibname}
+\createplainmark{index}{both}{\indexname}
+\createplainmark{glossary}{both}{\glossaryname}}
+
+
+
+%%%%%%%%%%%%%
+%%% Draft %%%
+%%%%%%%%%%%%%
+\ifthenelse{\boolean{revision}}{
+% Edit footers to include date of file generation
+\newcommand{\draftString}{\textit{Draft: \today}}
+
+\makeevenfoot{plain}{\thepage}{}{\draftString}
+\makeoddfoot{plain}{\draftString}{}{\thepage}
+\makeevenfoot{ruled}{\thepage}{}{\draftString}
+\makeoddfoot{ruled}{\draftString}{}{\thepage}
+}
+
+\newcommand{\skipThis}[1]{\ignorespaces}
+
+%%%%%%%%%%%%%%%%%%%%
+%%% Environments %%%
+%%%%%%%%%%%%%%%%%%%%
+
+% Acknowledgements is similar to abstract enviroment...
+\newenvironment{acknowledgements}
+{\renewcommand{\abstractname}{Acknowledgements}\abstract}
+{\endabstract}
+
+% ... as is the dedication
+\newenvironment{dedication}
+{\renewcommand{\abstractname}{Dedication}\abstract}
+{\endabstract}
+
+\newenvironment{impact}
+{\renewcommand{\abstractname}{Impact Statement}\abstract}
+{\endabstract}
+
+
+%%%%%%%%%%%%%%%%%%
+%%% Appearence %%%
+%%%%%%%%%%%%%%%%%%
+
+% Include the short caption at the start of the caption, if provided
+\makeatletter
+\let\x@caption\caption % original \caption
+\def\x@@caption[#1]#2{\x@caption[{#1}]{\textbf{#1} #2}} % with optional arg
+\def\x@@@caption#1{\x@caption[{#1}]{#1}} % without optional arg
+\def\caption{\@ifnextchar[\x@@caption\x@@@caption} % new \caption
+\makeatother
+
+% Define some useful commands for the chapter style
+\makeatletter
+\newlength\dlf@normtxtw
+\setlength\dlf@normtxtw{\textwidth}
+\newsavebox{\feline@chapter}
+
+\newcommand\feline@chapter@marker[1][4cm]{%
+\sbox\feline@chapter{%
+\resizebox{!}{#1}{\fboxsep=1pt%
+\colorbox{Highlight}{\color{white}\bfseries\thechapter}%
+}}%
+\rotatebox{90}{%
+\resizebox{%
+\heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
+{!}{\scshape\@chapapp}}\quad%
+\raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+}
+
+\newcommand\feline@chm[1][4cm]{%
+\sbox\feline@chapter{\feline@chapter@marker[#1]}%
+\makebox[0pt][l]{% aka \rlap
+\makebox[1cm][r]{\usebox\feline@chapter}%
+}}
+\makeatother
+
+% Prepare the chapter style(named after daleif1, upon which it was based)
+\makeatletter
+\makechapterstyle{Modifieddaleif1}{
+\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
+\renewcommand\chaptitlefont{\normalfont\huge\bfseries\color{Highlight}}
+\renewcommand\chapternamenum{}
+\renewcommand\printchaptername{}
+\renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par}
+\renewcommand\afterchapternum{\par\vskip\midchapskip}
+\renewcommand\printchaptertitle[1]{\chaptitlefont\raggedleft ##1\par}
+}
+\makeatother
+
+\chapterstyle{Modifieddaleif1}
+
+% Louise used a glossary - I didn't, so it has not been tested
+
+% \newglossarystyle{listLB}{
+% 
+% \renewcommand*{\glossentry}[2]{%
+% \item[\glsentryitem{##1}%
+% \glstarget{##1}{\glossentryname{##1}}]
+% \glossentrydesc{##1}\glspostdescription\\ \glsentryuseri{##1}}
+% 
+% % Sub-entries continue on the same line:
+% \renewcommand*{\subglossentry}[3]{%
+% \glssubentryitem{##2}%
+% \glstarget{##2}{\strut}\space
+% \glossentrydesc{##2}\glspostdescription\space ##3.}
+% 
+% % Add vertical space between groups:
+% \renewcommand*{\glsgroupskip}{\ifglsnogroupskip\else\indexspace\fi}%
+% }
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%% Bibliography %%%
+%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[authordate,backend=biber,uniquename=false]{biblatex-chicago}
+
+%Fix so that TeXnicCenter recognises which bib file has been loaded						
+\renewcommand{\bibliography}[1]{\addbibresource{#1.bib}}
+
+\AtEveryBibitem{\clearfield{note}}
+\AtEveryBibitem{\clearlist{language}}
+\AtEveryBibitem{\clearfield{month}\clearfield{day}}
+
+\DeclareBibliographyAlias{software}{online}
+
+%make urls brake more easily:
+
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+
+%% Make the bibliography single spaced, and allow form more stretch. 
+\AtBeginBibliography{\SingleSpacing \emergencystretch 3em}
+		
+%citeauthor with hyperlink
+\DeclareCiteCommand{\calink}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexnames{labelname}}
+     {}%
+   \printtext[bibhyperref]{\printnames{labelname}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+%citeyear with hyperlink
+\DeclareCiteCommand{\cyl}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\printtext[bibhyperref]{\printfield{year}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+		
+%%% Some shortcuts for bibliography terms
+
+\newcommand{\ca}{\citeauthor}
+\newcommand{\ci}{\autocite}
+\newcommand{\tc}{\textcite}
+
+%Commacite
+\newcommand{\cc}[1]{\calink{#1} \cyl{#1}}
+
+%%% Shortcut for quotations
+
+\newcommand{\bq}{\blockquote}
+\newcommand{\te}{\textelp}
+\newcommand{\tq}{\textquote}
+
+%Make quotations using \bq and \begin{displayquote} italic and with british quotation marks.
+\DeclareQuoteStyle[british]{english}
+  {\itshape\textquoteleft}
+  {\textquoteright}
+  [0.05em]
+  {\textquotedblleft}
+  {\textquotedblright}
+  
+
+\renewcommand{\mkcitation}[1]{\ifblockquote{\sourceatright{(#1)}}{ (#1)}}
+
+\renewcommand{\mkblockquote}[4]{\openautoquote#1#2\closeautoquote#3#4}
+
+\SetBlockEnvironment{quotation}
+
+\renewcommand{\mkbegdispquote}[2]{\openautoquote}
+\renewcommand{\mkenddispquote}[2]{\closeautoquote#1#2}
+
+
+% Cleveref stuff:
+
+\usepackage[nameinlink,capitalize,noabbrev]{cleveref}   % Helpful package for writing figure names etc.
+
+%Memoir subfigure / subtable setup
+\newsubfloat{table}
+\newsubfloat{figure}
+
+% Define table columns  that allow for newlines:
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{E}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%Make \cref{app:diagrams} resolve to "Appendix A"
+\crefname{appsec}{appendix}{Appendices}
+
+% Set up a command for placeholder figures
+\newcommand{\placeholder}[1]{\fbox{{\color{White}\rule{0.9\textwidth}{#1\textheight}}}}
+

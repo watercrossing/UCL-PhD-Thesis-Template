@@ -1,0 +1,127 @@
+
+\hypersetup{pageanchor=false}
+\frontmatter
+
+\ifthenelse{\boolean{onlinecopy}}{\AddToShipoutPictureFG*{% Add picture to current page
+  \AtStockUpperLeft{% Add picture to lower-left corner of paper stock
+    \raisebox{-\height}{\includegraphics[width=\paperwidth]{black}}}% http://latex.tug.org/texlive/devsrc/Master/texmf-dist/doc/generic/pstricks/images/tiger.eps
+}}{}
+\begin{titlingpage}
+\SingleSpacing
+\calccentering{\unitlength}
+\begin{adjustwidth*}{\unitlength}{-\unitlength}
+\centering
+\vspace*{6cm}
+{\LARGE \bfseries \thesisTitle}
+\vfill
+%\includegraphics{beltcrest.pdf} \par
+{\Large \thesisAuthor\\[2cm]}
+
+{\large A thesis submitted for the degree of\\[0.5cm]
+
+\textit{Doctor of Philosophy}\\[0.5cm]
+at\\[0.5cm]
+UCL\\[3cm]
+2019}
+\end{adjustwidth*}
+\end{titlingpage} 
+%
+%%% UCL GUIDELINES: https://www.ucl.ac.uk/students/exams-and-assessments/research-assessments/format-bind-and-submit-your-thesis-general-guidance#Format%20your%20thesis
+
+\hypersetup{pageanchor=true}
+\pagestyle{plain}
+
+\vspace*{3cm}
+I, \thesisAuthor~confirm that the work presented in this thesis is my own. Where information has been derived from other sources, I confirm that this has been indicated in the thesis.
+
+\ifthenelse{\boolean{onlinecopy}}{}{\vspace*{2cm}
+\noindent London, \today, }
+\cleardoublepage
+
+%
+%\phantomsection
+%\addcontentsline{toc}{chapter}{dedication}
+%\vspace*{3cm}
+%\begin{dedication}
+	%some text for dedication...
+%\end{dedication}
+%\cleardoublepage
+%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+\begin{abstract}   
+
+An abstract should contain a motivation (1) of your research and some information of the background. This should be followed by a clear statement of your aims (2). Next you should discuss the methods (3) used to fulfil your aims. Then state your results (4), followed by conclusions (5) and recommendations (6). 
+
+Structured abstracts are great! As this is a big thesis, each of these sections could be a paragraph.
+
+\end{abstract}
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Impact Statement}
+\vspace*{3cm}
+\begin{impact}
+
+An impact statement is required. UCL's graduate school writes:
+
+\begin{displayquote}[\cc{uclgraduateschool_impact_2018}]
+The statement should describe, in no more than 500 words, how the expertise, knowledge, analysis, 
+discovery or insight presented in your thesis could be put to a beneficial use.  Consider benefits 
+both inside and outside academia and the ways in which these benefits could be brought about. 
+The benefits inside academia could be to the discipline and future scholarship, research methods 
+or methodology, the curriculum; they might be within your research area and potentially within other 
+research areas.  
+
+The benefits outside academia could occur to commercial activity, social enterprise, professional 
+practice, clinical use, public health, public policy design, public service delivery, laws, public 
+discourse, culture, the quality of the environment or quality of life.  
+The impact could occur locally, regionally, nationally or internationally, to individuals, communities 
+or organisations and could be immediate or occur incrementally, in the context of a broader field 
+of research, over many years, decades or longer.  
+
+Impact could be brought about through disseminating outputs (either in scholarly journals or 
+elsewhere such as specialist or mainstream media), education, public engagement, translational 
+research, commercial and social enterprise activity, engaging with public policy makers and public 
+service delivery practitioners, influencing ministers, collaborating with academics and non-academics etc.
+\end{displayquote}
+
+\end{impact}
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\vspace*{3cm}
+\begin{acknowledgements}
+I would like to thank everyone!
+\end{acknowledgements}
+\cleardoublepage
+
+\pagestyle{ruled}
+
+{
+\hypersetup{linkcolor=black}
+\tableofcontents
+}
+\cleardoublepage
+
+{
+\hypersetup{linkcolor=black}
+\listoffigures
+}
+\cleardoublepage
+
+{
+\hypersetup{linkcolor=black}
+\listoftables
+}
+\cleardoublepage
+
+\ifthenelse{\boolean{revision}}{
+\hypersetup{linkcolor=black}
+\conditionalLoN
+}%}
+
+% Not using the glossary for now
+% \printglossary[title=Glossary and Acronyms]

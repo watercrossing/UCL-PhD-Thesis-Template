@@ -1,0 +1,67 @@
+\documentclass[a4paper,twoside,12pt]{memoir}
+
+%% will be used on t he title page and pdf info by default
+\newcommand{\thesisTitle}{A Super Awesome Thesis}
+\newcommand{\thesisAuthor}{Firstname Lastname}
+
+\usepackage{ifthen}
+\newboolean{onlinecopy}
+\newboolean{revision}
+
+
+%%%
+% Switches:
+% is this an online copy or a version to be printed (changes colours for links/cross-references)
+\setboolean{onlinecopy}{true}
+%Is this a revision (adds date to footer and shows notes)
+\setboolean{revision}{true}
+%%%
+
+
+
+% Formatting and custom environments/commands
+\input{DocumentFormat.tex}
+
+%% Things to customise
+
+% Specify who is making notes on the document, with our own colours (could use standard colour names)
+\ifthenelse{\boolean{revision}}{
+\newcommand{\ingolf}[1]{\notes{Ingolf}{CIngolf}{#1}}
+\newcommand{\simon}[1]{\notes{Simon}{CSimon}{#1}}
+}{
+% If not a draft, comment commands don't do anything
+\newcommand{\ingolf}[1]{\ignorespaces}
+\newcommand{\simon}[1]{\ignorespaces}
+}
+
+% Check these folders for graphics
+\graphicspath{{./FrontMatter/}{./Introduction/}{./upgrade/img/}}
+
+% Bibliography
+\bibliography{thesis}
+
+\begin{document}
+
+\input{FrontMatter/FrontMatter}
+
+\mainmatter
+\pagestyle{ruled}
+
+\input{Introduction/Introduction}
+
+% Add other chapters
+% \input{litreview/litreview}
+
+\printbibliography
+
+%%% OK, Appendices!!
+
+\appendix
+\input{Appendix}
+
+% or multiple appendices
+% \input{perceptions/sans-appendix}
+
+
+\end{document}
+
